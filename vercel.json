@@ -1,0 +1,8 @@
+{
+  "functions": {
+    "api/draft.js": {
+      "maxDuration": 300,
+      "includeFiles": "style-guide.txt"
+    }
+  }
+}
