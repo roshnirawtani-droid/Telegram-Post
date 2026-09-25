@@ -16,6 +16,12 @@ The site has no password, so anyone with the link can use it. Set a spending lim
 After changing variables, redeploy for them to take effect.
 
 # Telegram bot
+The bot runs on Vercel (`api/telegram.js`), so it answers 24/7. Telegram sends each message to `https://meera-post-writer.vercel.app/api/telegram`. Vercel needs `TELEGRAM_BOT_TOKEN` and `GEMINI_API_KEY` set.
+
+To revise a draft, reply to it in Telegram (swipe left) and say what to change.
+
+## Running it on this computer instead (optional)
+`bot.js` is the older version that runs only while `npm start` is running. It can't run at the same time as the Vercel webhook: Telegram only delivers messages one way at a time.
 
 ## Setup
 Both keys are already in `.env`, and there's nothing to install.
