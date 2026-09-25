@@ -113,10 +113,6 @@
       <label for="fact">Fresh fact from Meera <span class="hint">(optional, but posts are better with one)</span></label>
       <textarea id="fact" placeholder="A customer question, a number or a story. e.g. A customer emailed last week asking if we forgot to add scent."></textarea>
     </div>
-    <div class="field">
-      <label for="password">Password</label>
-      <input id="password" type="password" required autocomplete="current-password">
-    </div>
     <div class="row">
       <button class="primary" id="draftBtn" type="submit">Write post</button>
       <span class="status" id="status"></span>
@@ -173,8 +169,6 @@
     $("ideas").append(b);
   }
 
-  try { $("password").value = localStorage.getItem("pw") || ""; } catch {}
-
   function setBusy(busy, label) {
     $("draftBtn").disabled = busy;
     $("reviseBtn").disabled = busy;
@@ -194,12 +188,11 @@
     try {
       const res = await fetch("/api/draft", {
         method: "POST",
-        headers: { "Content-Type": "application/json", "x-app-password": $("password").value },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ contents: next }),
       });
       const data = await res.json().catch(() => ({ error: "The server sent an unexpected reply." }));
       if (!res.ok) throw new Error(data.error || "Something went wrong.");
-      try { localStorage.setItem("pw", $("password").value); } catch {}
       history = [...next, { role: "model", parts: data.parts }];
       render(data.text);
       return true;
