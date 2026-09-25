@@ -1,15 +1,9 @@
 // Vercel serverless function behind the website. The browser keeps the
 // conversation and sends it with each request, so revisions work without a database.
-import { createHash, timingSafeEqual } from "node:crypto";
 import { generate } from "../writer.js";
 
 const MAX_MESSAGES = 21;
 const MAX_BODY_CHARS = 300_000;
-
-function samePassword(a, b) {
-  const hash = (s) => createHash("sha256").update(String(s)).digest();
-  return timingSafeEqual(hash(a), hash(b));
-}
 
 async function readBody(req) {
   if (req.body !== undefined) return typeof req.body === "string" ? JSON.parse(req.body) : req.body;
@@ -37,12 +31,6 @@ function validContents(contents) {
 
 export default async function handler(req, res) {
   if (req.method !== "POST") return reply(res, 405, { error: "Use POST." });
-
-  const password = process.env.APP_PASSWORD;
-  if (!password) return reply(res, 500, { error: "APP_PASSWORD is not set on the server." });
-  if (!samePassword(req.headers["x-app-password"] ?? "", password)) {
-    return reply(res, 401, { error: "Wrong password." });
-  }
 
   let contents;
   try {
