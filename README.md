@@ -8,9 +8,10 @@ Type a post idea and an optional fresh fact, then press **Write post**. The draf
 Files: `public/index.html` (the page), `api/draft.js` (talks to Gemini), `vercel.json`.
 
 In Vercel, under Project → Settings → Environment Variables, add:
-- `GEMINI_API_KEY`: your Gemini key
-- `APP_PASSWORD`: a password you choose; the page asks for it so strangers can't use your credits
+- `GEMINI_API_KEY`: your Gemini key (type: Secret)
 - `GEMINI_MODEL` (optional): e.g. `gemini-flash-latest` for faster drafts
+
+The site has no password, so anyone with the link can use it. Set a spending limit on the Gemini key in Google AI Studio.
 
 After changing variables, redeploy for them to take effect.
 
